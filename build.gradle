@@ -1,0 +1,35 @@
+buildscript {
+	ext {
+		akka_version = '2.5.2'
+        kotlin_version = '1.1.1'
+	}
+}
+
+
+plugins {
+	id "org.jetbrains.kotlin.jvm" version "1.1.1"
+}
+apply plugin: "java"
+apply plugin: "kotlin"
+
+sourceSets {
+    main.java.srcDirs += 'src'
+
+}
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "com.typesafe.akka:akka-actor_2.11:$akka_version"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'MainKt'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
