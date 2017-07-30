@@ -1,13 +1,15 @@
-import akka.actor.*
+import akka.actor.ActorSystem
+import akka.actor.ActorRef
+import akka.actor.Props
 import AkkaBot.*
 
 fun main(args: Array<String>) {
     val system: ActorSystem = ActorSystem.create()
-    val akkaBot: ActorRef = system.actorOf(
-        Props.create(AkkaBot::class.java),
-       "akkaBot")
+    val masterBot: ActorRef = system.actorOf(
+        Props.create(BotMaster::class.java),
+        "botMaster")
 
-    akkaBot.tell(Move(Direction.FORWARD), ActorRef.noSender())
+    masterBot.tell(StartChildBot(), ActorRef.noSender())
+
 }
-
 
